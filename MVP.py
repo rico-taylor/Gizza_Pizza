@@ -39,8 +39,8 @@ def order():
   show_frame(base)
 
 #make image variables
-entryImage = ImageTk.PhotoImage(file="GizzaLogo.png")
-orderLabel = ImageTk.PhotoImage(file="OrderButton.png")
+entryImage = ImageTk.PhotoImage(file="images/GizzaLogo.png")
+orderLabel = ImageTk.PhotoImage(file="images/OrderButton.png")
 
 #place on the screen
 Label(entry, image=entryImage, borderwidth=0).pack(pady=100)
