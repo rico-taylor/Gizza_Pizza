@@ -4,7 +4,7 @@ from PIL import ImageTk, Image
 root = Tk()
 root.title('Minimum Viable Project')
 
-#frame for the outcome
+#frames for the outcome
 entry = Frame(root, background='#cee741')
 base = Frame(root, background='blue')
 sauce = Frame(root, background='#cee741')
@@ -46,10 +46,16 @@ orderLabel = ImageTk.PhotoImage(file="OrderButton.png")
 Label(entry, image=entryImage, borderwidth=0).pack(pady=100)
 Button(entry, image=orderLabel, borderwidth=0, bd=5, command=order).pack(pady=0)
 
+#-----Pizza View screen-----#
+pizza = Frame(base, background='#cee741', height = 550, width = 550)
+pizza.pack(anchor=NE)
 
+def putOnPizza(img):
+  label = Label(pizza, image=img)
+  label.place(x=1,y=1)
 
-
-
+Button(base, text="Gizza logo", command=lambda:putOnPizza(entryImage)).pack()
+Button(base, text="Order buttton", command=lambda:putOnPizza(orderLabel)).pack()
 
 
 
