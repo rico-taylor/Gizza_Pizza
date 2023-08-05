@@ -60,14 +60,45 @@ pizza.pack(anchor=NE)
 canvas = Canvas(pizza, bg="#cee741", width=550, height=550)
 canvas.pack()
 
-def putOnPizza(img):
-  canvas.create_image(275, 275, image=img)
+orderList = []
+
+def putOnPizza(img, int):
+  global orderList
+  print(str(img))
+  if len(orderList) == 0:
+    if int == 0:
+      orderList.insert(0, int)
+      orderList.insert(1, str(img))
+  elif orderList[-2] < int:
+    orderList.append(int)
+    orderList.append(str(img))
+  elif int not in orderList:
+    numb = int
+    while numb not in orderList:
+      numb -= 1
+      if numb in orderList:
+        lower = numb
+    orderList.insert(lower + 2, int)
+    orderList.insert(lower + 3, str(img))
+  else:
+    for x in orderList:
+      if x == int:
+        orderList.insert(orderList.index(x) + 2, int)
+        orderList.insert(orderList.index(x) + 3, str(img))
+        break
+      else:
+        pass
+  print(orderList)
+  if len(orderList) == 0 and int != 0:
+    pass
+  else:
+    canvas.create_image(275, 275, image=img)
 
 
-Button(base, text="Base", command=lambda:putOnPizza(BaseClassic)).pack()
-Button(base, text="Sauce", command=lambda:putOnPizza(SauceTomato)).pack()
-Button(base, text="Cheese", command=lambda:putOnPizza(CheeseBasic)).pack()
-Button(base, text="Topping", command=lambda:putOnPizza(ToppingPepperoni)).pack()
+Button(base, text="Base", command=lambda:putOnPizza(BaseClassic, 0)).pack()
+Button(base, text="Sauce", command=lambda:putOnPizza(SauceTomato, 1)).pack()
+Button(base, text="Cheese", command=lambda:putOnPizza(CheeseBasic, 2)).pack()
+Button(base, text="Topping", command=lambda:putOnPizza(ToppingPepperoni, 3)).pack()
 
 
 
