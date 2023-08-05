@@ -64,40 +64,47 @@ orderList = []
 
 def putOnPizza(img, int):
   global orderList
-  print(str(img))
-  if len(orderList) == 0:
-    if int == 0:
-      orderList.insert(0, int)
-      orderList.insert(1, str(img))
-  elif orderList[-2] < int:
-    orderList.append(int)
-    orderList.append(str(img))
-  elif int not in orderList:
-    numb = int
-    while numb not in orderList:
-      numb -= 1
-      if numb in orderList:
-        lower = numb
-    orderList.insert(lower + 2, int)
-    orderList.insert(lower + 3, str(img))
-  else:
-    for x in orderList:
-      if x == int:
-        orderList.insert(orderList.index(x) + 2, int)
-        orderList.insert(orderList.index(x) + 3, str(img))
-        break
-      else:
-        pass
-  print(orderList)
-  if len(orderList) == 0 and int != 0:
+  if img in orderList:
     pass
   else:
-    canvas.create_image(275, 275, image=img)
-
+    if len(orderList) == 0:
+      if int == 0:
+        orderList.insert(0, int)
+        orderList.insert(1, img)
+    elif orderList[-2] < int:
+      orderList.append(int)
+      orderList.append(img)
+    elif int not in orderList:
+      numb = int
+      while numb not in orderList:
+        numb -= 1
+        if numb in orderList:
+          lower = numb
+          orderList.insert(orderList.index(lower) + 2, int)
+          orderList.insert(orderList.index(lower) + 3, img)
+    else:
+      for x in orderList:
+        if x == int:
+          orderList.insert(orderList.index(x) + 2, int)
+          orderList.insert(orderList.index(x) + 3, img)
+          break
+        else:
+          pass
+    for item in orderList:
+      if orderList.index(item) % 2 != 0:
+        canvas.create_image(275,275, image=item)
+  print(orderList)
 
 Button(base, text="Base", command=lambda:putOnPizza(BaseClassic, 0)).pack()
 Button(base, text="Sauce", command=lambda:putOnPizza(SauceTomato, 1)).pack()
 Button(base, text="Cheese", command=lambda:putOnPizza(CheeseBasic, 2)).pack()
 Button(base, text="Topping", command=lambda:putOnPizza(ToppingPepperoni, 3)).pack()
+
+
+
+
+
+
+
 
 root.mainloop()
