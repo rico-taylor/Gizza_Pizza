@@ -100,8 +100,4 @@ Button(base, text="Sauce", command=lambda:putOnPizza(SauceTomato, 1)).pack()
 Button(base, text="Cheese", command=lambda:putOnPizza(CheeseBasic, 2)).pack()
 Button(base, text="Topping", command=lambda:putOnPizza(ToppingPepperoni, 3)).pack()
 
-
-
-#note for next time: I need to make a list, then this list will keep track of what is on the screen at any time. I also need to make a dictionary. This will give each one an attribute for the order that it needs to go. Then when another option is picked it can be swapped out for the thing in the list with the same attribute/order number.
-
 root.mainloop()
