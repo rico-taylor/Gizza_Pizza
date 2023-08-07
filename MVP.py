@@ -38,30 +38,20 @@ def show_frame(frame):
 #making the entry screen appear first
 show_frame(entry)
 
-#-----Entry Screen Code-----#
+#-----Building screen of Pizza-----#
+stages = base #change this depending on what screen the screen is in at the time
 
-#defining functions
-def order():
-  show_frame(base)
-
-#make image variables
-entryImage = ImageTk.PhotoImage(file="images/GizzaLogo.png")
-orderLabel = ImageTk.PhotoImage(file="images/OrderButton.png")
-
-#place on the screen
-Label(entry, image=entryImage, borderwidth=0).pack(pady=100)
-Button(entry, image=orderLabel, borderwidth=0, bd=5, command=order).pack(pady=0)
-
-#-----Pizza View screen-----#
-pizza = Frame(base, background='#cee741', height = 550, width = 550)
+pizza = Frame(stages, background='#cee741', height = 550, width = 550)
 pizza.pack(anchor=NE)
 
 #setting up a canvas in order to support png with transparent background
 canvas = Canvas(pizza, bg="#cee741", width=550, height=550)
 canvas.pack()
 
+#defining the list that will be used for layering system
 orderList = []
 
+#function which sets out the list and then adds the images to the page
 def putOnPizza(img, int):
   global orderList
   if img in orderList:
@@ -93,18 +83,64 @@ def putOnPizza(img, int):
     for item in orderList:
       if orderList.index(item) % 2 != 0:
         canvas.create_image(275,275, image=item)
-  print(orderList)
 
 Button(base, text="Base", command=lambda:putOnPizza(BaseClassic, 0)).pack()
 Button(base, text="Sauce", command=lambda:putOnPizza(SauceTomato, 1)).pack()
 Button(base, text="Cheese", command=lambda:putOnPizza(CheeseBasic, 2)).pack()
 Button(base, text="Topping", command=lambda:putOnPizza(ToppingPepperoni, 3)).pack()
 
+#-----Base Screen Code-----#
+def BASE():
+  global stages
+  show_frame(base)
+  stages = base
+#-----Sauce Screen Code-----#
+def SAUCE():
+  global stages
+  show_frame(sauce)
+  stages = sauce
+#-----Cheese Screen Code-----#
+def CHEESE():
+  global stages
+  show_frame(cheese)
+  stages = cheese
+#-----Toppings Screen Code-----#
+def TOPPING():
+  global stages
+  show_frame(toppings)
+  stages = toppings
+
+#-----Overarching Screen code-----#
+goToBase = Button(stages, text="BASE", command=BASE)
+goToBase = Button(stages, text="SAUCE", command=SAUCE)
+goToBase = Button(stages, text="CHEESE", command=CHEESE)
+goToBase = Button(stages, text="TOPPING", command=TOPPING)
+
+#-----Entry Screen Code-----#
+
+#make image variables
+entryImage = ImageTk.PhotoImage(file="images/GizzaLogo.png")
+orderLabel = ImageTk.PhotoImage(file="images/OrderButton.png")
+
+#place on the screen
+Label(entry, image=entryImage, borderwidth=0).pack(pady=100)
+Button(entry, image=orderLabel, borderwidth=0, bd=5, command=BASE).pack(pady=0)
 
 
 
 
+#-----Finalise Order Screen-----#
 
+#defining functions
 
+def back():
+  show_frame(base)
+
+def final():
+  show_frame(finalise)
+
+#NOTE: Change the frame that the buttons are in from base to whatever they need to be in
+Button(base, text="finalise order", command=final).pack(anchor=SE)
+Button(finalise, text="back to ording", command=back).pack()
 
 root.mainloop()
