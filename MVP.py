@@ -36,7 +36,6 @@ def show_frame(frame):
   frame.tkraise()
 
 #-----Building screen of Pizza-----#
-
 pizza = Frame(root, background='#cee741', height = 550, width = 550)
 pizza.grid(row=0, column=0, sticky=NE)
 
@@ -88,44 +87,58 @@ Button(toppings, text="Topping", command=lambda:putOnPizza(ToppingPepperoni, 3))
 #-----Base Screen Code-----#
 def BASE():
   global stages
+  global last_screen
+  last_screen = BASE
   stages = base
   show_frame(stages)
+  pizza.place(x=1366,y=0)
   show_frame(pizza)
   pagesBar()
+  goToFinal()
 #-----Sauce Screen Code-----#
 def SAUCE():
   global stages
+  global last_screen
+  last_screen = SAUCE
   stages = sauce
   show_frame(stages)
   show_frame(pizza)
   pagesBar()
+  goToFinal()
 #-----Cheese Screen Code-----#
 def CHEESE():
   global stages
+  global last_screen
+  last_screen = CHEESE
   stages = cheese
   show_frame(stages)
   show_frame(pizza)
   pagesBar()
+  goToFinal()
 #-----Toppings Screen Code-----#
 def TOPPING():
   global stages
+  global last_screen
+  last_screen = TOPPING
   stages = toppings
   show_frame(stages)
   show_frame(pizza)
   pagesBar()
+  goToFinal()
 
 #-----Overarching Screen code-----#
 def pagesBar():
   global stages
+  icon = Label(stages, image=entryImage, borderwidth=0) #change the size later of the image itself
   goToBase = Button(stages, text="BASE", command=BASE)
   goToSauce = Button(stages, text="SAUCE", command=SAUCE)
   goToCheese = Button(stages, text="CHEESE", command=CHEESE)
   goToToppings = Button(stages, text="TOPPING", command=TOPPING)
 
-  goTo = [goToBase, goToSauce, goToCheese, goToToppings]
+  goTo = [icon, goToBase, goToSauce, goToCheese, goToToppings]
 
   for x in goTo:
-    x.grid(row=0, column=goTo.index(x))
+    x.grid(row=0, column=goTo.index(x), pady=35, padx=5)
 
 #-----Entry Screen Code-----#
 
@@ -137,22 +150,20 @@ orderLabel = ImageTk.PhotoImage(file="images/OrderButton.png")
 Label(entry, image=entryImage, borderwidth=0).pack(pady=100)
 Button(entry, image=orderLabel, borderwidth=0, bd=5, command=BASE).pack(pady=0)
 
-
-
-
 #-----Finalise Order Screen-----#
 
 #defining functions
-
-def back():
-  show_frame(base)
-
 def final():
   show_frame(finalise)
+  pizza.place(x=30,y=150)
+  show_frame(pizza)
 
 #NOTE: Change the frame that the buttons are in from base to whatever they need to be in
-Button(base, text="finalise order", command=final).grid(row=2, column=4)
-Button(finalise, text="back to ording", command=back).pack()
+
+
+def goToFinal():
+  Button(stages, text="finalise order", command=final).grid(row=2, column=4)
+  Button(finalise, text="back to ording", command=last_screen).grid(row=0, column=0, padx=80, pady=80)
 
 #-----Main Routine-----#
 
