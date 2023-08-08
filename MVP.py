@@ -7,9 +7,9 @@ root.title('Minimum Viable Project')
 #frames for the outcome
 entry = Frame(root, background='#cee741')
 base = Frame(root, background='blue')
-sauce = Frame(root, background='#cee741')
-cheese = Frame(root, background='#cee741')
-toppings = Frame(root, background='#cee741')
+sauce = Frame(root, background='blue')
+cheese = Frame(root, background='blue')
+toppings = Frame(root, background='blue')
 finalise = Frame(root, background='#cee741')
 confirm = Frame(root, background='#cee741')
 
@@ -35,14 +35,10 @@ for frame in frames:
 def show_frame(frame):
   frame.tkraise()
 
-#making the entry screen appear first
-show_frame(entry)
-
 #-----Building screen of Pizza-----#
-stages = base #change this depending on what screen the screen is in at the time
 
-pizza = Frame(stages, background='#cee741', height = 550, width = 550)
-pizza.pack(anchor=NE)
+pizza = Frame(root, background='#cee741', height = 550, width = 550)
+pizza.grid(row=0, column=0, sticky=NE)
 
 #setting up a canvas in order to support png with transparent background
 canvas = Canvas(pizza, bg="#cee741", width=550, height=550)
@@ -84,37 +80,52 @@ def putOnPizza(img, int):
       if orderList.index(item) % 2 != 0:
         canvas.create_image(275,275, image=item)
 
-Button(base, text="Base", command=lambda:putOnPizza(BaseClassic, 0)).pack()
-Button(base, text="Sauce", command=lambda:putOnPizza(SauceTomato, 1)).pack()
-Button(base, text="Cheese", command=lambda:putOnPizza(CheeseBasic, 2)).pack()
-Button(base, text="Topping", command=lambda:putOnPizza(ToppingPepperoni, 3)).pack()
+Button(base, text="Base", command=lambda:putOnPizza(BaseClassic, 0)).grid(row=1, column=4)
+Button(sauce, text="Sauce", command=lambda:putOnPizza(SauceTomato, 1)).grid(row=1, column=4)
+Button(cheese, text="Cheese", command=lambda:putOnPizza(CheeseBasic, 2)).grid(row=1, column=4)
+Button(toppings, text="Topping", command=lambda:putOnPizza(ToppingPepperoni, 3)).grid(row=1, column=4)
 
 #-----Base Screen Code-----#
 def BASE():
   global stages
-  show_frame(base)
   stages = base
+  show_frame(stages)
+  show_frame(pizza)
+  pagesBar()
 #-----Sauce Screen Code-----#
 def SAUCE():
   global stages
-  show_frame(sauce)
   stages = sauce
+  show_frame(stages)
+  show_frame(pizza)
+  pagesBar()
 #-----Cheese Screen Code-----#
 def CHEESE():
   global stages
-  show_frame(cheese)
   stages = cheese
+  show_frame(stages)
+  show_frame(pizza)
+  pagesBar()
 #-----Toppings Screen Code-----#
 def TOPPING():
   global stages
-  show_frame(toppings)
   stages = toppings
+  show_frame(stages)
+  show_frame(pizza)
+  pagesBar()
 
 #-----Overarching Screen code-----#
-goToBase = Button(stages, text="BASE", command=BASE)
-goToBase = Button(stages, text="SAUCE", command=SAUCE)
-goToBase = Button(stages, text="CHEESE", command=CHEESE)
-goToBase = Button(stages, text="TOPPING", command=TOPPING)
+def pagesBar():
+  global stages
+  goToBase = Button(stages, text="BASE", command=BASE)
+  goToSauce = Button(stages, text="SAUCE", command=SAUCE)
+  goToCheese = Button(stages, text="CHEESE", command=CHEESE)
+  goToToppings = Button(stages, text="TOPPING", command=TOPPING)
+
+  goTo = [goToBase, goToSauce, goToCheese, goToToppings]
+
+  for x in goTo:
+    x.grid(row=0, column=goTo.index(x))
 
 #-----Entry Screen Code-----#
 
@@ -140,7 +151,13 @@ def final():
   show_frame(finalise)
 
 #NOTE: Change the frame that the buttons are in from base to whatever they need to be in
-Button(base, text="finalise order", command=final).pack(anchor=SE)
+Button(base, text="finalise order", command=final).grid(row=2, column=4)
 Button(finalise, text="back to ording", command=back).pack()
+
+#-----Main Routine-----#
+
+#making the entry screen appear first
+show_frame(entry)
+
 
 root.mainloop()
