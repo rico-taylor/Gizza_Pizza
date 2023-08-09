@@ -1,8 +1,15 @@
+#Digital Technology Assessment 2023
+#Function: Self Ordering System for Gizza Pizza
+#Starting Date: 03/08/2023
+#Date Last Modified: NOTE:chnage/NOTE:change/2023
+#Coder: Rico Taylor
+
 from tkinter import *
 from PIL import ImageTk, Image
+import re #from the python library to be used for checking the formating of words
 
 root = Tk()
-root.title('Minimum Viable Project')
+root.title('Minimum Viable Product')
 
 #frames for the outcome
 entry = Frame(root, background='#cee741')
@@ -47,7 +54,7 @@ canvas.pack()
 orderList = []
 
 #function which sets out the list and then adds the images to the page
-def putOnPizza(img, int):
+def putOnPizza(img, int, str):
   global orderList
   if img in orderList:
     pass
@@ -56,33 +63,37 @@ def putOnPizza(img, int):
       if int == 0:
         orderList.insert(0, int)
         orderList.insert(1, img)
-    elif orderList[-2] < int:
+        orderList.insert(2, str)
+    elif orderList[-3] < int:
       orderList.append(int)
       orderList.append(img)
+      orderList.append(str)
     elif int not in orderList:
       numb = int
       while numb not in orderList:
         numb -= 1
         if numb in orderList:
           lower = numb
-          orderList.insert(orderList.index(lower) + 2, int)
-          orderList.insert(orderList.index(lower) + 3, img)
+          orderList.insert(orderList.index(lower) + 3, int)
+          orderList.insert(orderList.index(lower) + 4, img)
+          orderList.insert(orderList.index(lower) + 5, str)
     else:
       for x in orderList:
         if x == int:
-          orderList.insert(orderList.index(x) + 2, int)
-          orderList.insert(orderList.index(x) + 3, img)
+          orderList.insert(orderList.index(x) + 3, int)
+          orderList.insert(orderList.index(x) + 4, img)
+          orderList.insert(orderList.index(x) + 5, str)
           break
         else:
           pass
     for item in orderList:
-      if orderList.index(item) % 2 != 0:
+      if (orderList.index(item) -1) % 3 == 0:
         canvas.create_image(275,275, image=item)
 
-Button(base, text="Base", command=lambda:putOnPizza(BaseClassic, 0)).grid(row=1, column=4)
-Button(sauce, text="Sauce", command=lambda:putOnPizza(SauceTomato, 1)).grid(row=1, column=4)
-Button(cheese, text="Cheese", command=lambda:putOnPizza(CheeseBasic, 2)).grid(row=1, column=4)
-Button(toppings, text="Topping", command=lambda:putOnPizza(ToppingPepperoni, 3)).grid(row=1, column=4)
+Button(base, text="Base", command=lambda:putOnPizza(BaseClassic, 0, "Classic Base")).grid(row=1, column=4)
+Button(sauce, text="Sauce", command=lambda:putOnPizza(SauceTomato, 1, "Tomato Sauce")).grid(row=1, column=4)
+Button(cheese, text="Cheese", command=lambda:putOnPizza(CheeseBasic, 2, "Basic Cheese")).grid(row=1, column=4)
+Button(toppings, text="Topping", command=lambda:putOnPizza(ToppingPepperoni, 3, "Pepperoni")).grid(row=1, column=4)
 
 #-----Base Screen Code-----#
 def BASE():
@@ -102,6 +113,7 @@ def SAUCE():
   last_screen = SAUCE
   stages = sauce
   show_frame(stages)
+  pizza.place(x=1366,y=0)
   show_frame(pizza)
   pagesBar()
   goToFinal()
@@ -112,6 +124,7 @@ def CHEESE():
   last_screen = CHEESE
   stages = cheese
   show_frame(stages)
+  pizza.place(x=1366,y=0)
   show_frame(pizza)
   pagesBar()
   goToFinal()
@@ -122,6 +135,7 @@ def TOPPING():
   last_screen = TOPPING
   stages = toppings
   show_frame(stages)
+  pizza.place(x=1366,y=0)
   show_frame(pizza)
   pagesBar()
   goToFinal()
@@ -154,11 +168,23 @@ Button(entry, image=orderLabel, borderwidth=0, bd=5, command=BASE).pack(pady=0)
 
 #defining functions
 def final():
+  global orderList
+  global finalise
   show_frame(finalise)
   pizza.place(x=30,y=150)
   show_frame(pizza)
+  Label(finalise, text="Your Pizza:").grid(row=1, column=1, padx=350, pady=10, sticky=W)
+  nameList = []
+  for item in orderList:
+    if (orderList.index(item) + 1) % 3 == 0:
+      nameList.append(item)
+  for name in nameList:
+    Label(finalise, text=name, bg="#cee741").grid(row=(2+nameList.index(name)), column=1, padx=350, pady=5, sticky=W)
 
-#NOTE: Change the frame that the buttons are in from base to whatever they need to be in
+enterName = Label(finalise, text="Enter your name:").place(x=620, y=630)
+userName = Entry(finalise, width=50)
+userName.place(x=620, y=660)
+userName.get()
 
 
 def goToFinal():
@@ -169,6 +195,5 @@ def goToFinal():
 
 #making the entry screen appear first
 show_frame(entry)
-
 
 root.mainloop()
