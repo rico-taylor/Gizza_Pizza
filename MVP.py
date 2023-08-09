@@ -184,8 +184,32 @@ def final():
 enterName = Label(finalise, text="Enter your name:").place(x=620, y=630)
 userName = Entry(finalise, width=50)
 userName.place(x=620, y=660)
-userName.get()
 
+
+def confirm():
+  global names
+  global finish
+  finish = Toplevel(width=250, height=100, background='#cee741')
+  finish.title('Confirmation')
+  names = str(userName.get()) #NOTE: fix capitalization of both words
+  Label(finish, text=names.capitalize()).grid(row=0,column=0, padx=10)
+  Label(finish, text="Would you like to confirm your order?", bg='#cee741').grid(row=1, column=0, columnspan=2, padx=10)
+  Button(finish, text="Yes", command=yes).grid(row=2, column=0, padx=2)
+  Button(finish, text="No", command=no).grid(row=2, column=1)
+
+def yes():
+  global finish
+  message = Toplevel(width=250, height=100, background='#cee741')
+  Label(message, text="Your order will be ready to pick up in store in ten minutes", bg='#cee741').pack(padx=20, pady=10)
+  Label(message, text="Thankyou for buying from Gizza Pizza", bg='#cee741').pack(padx=20)
+  #NOTE: destroy the whole programme and then everything will be reset back to the entry screen
+  show_frame(entry)
+
+def no():
+  final()
+  #NOTE: destroy the finish TopLevel thing so that it just goes back 
+
+Button(finalise, text="Proceed", command=confirm).place(x=620, y=690)
 
 def goToFinal():
   Button(stages, text="finalise order", command=final).grid(row=2, column=4)
