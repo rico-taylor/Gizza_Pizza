@@ -6,7 +6,7 @@
 
 from tkinter import *
 from PIL import ImageTk, Image
-import re #from the python library to be used for checking the formating of words
+import os
 
 root = Tk()
 root.title('Minimum Viable Product')
@@ -18,7 +18,6 @@ sauce = Frame(root, background='blue')
 cheese = Frame(root, background='blue')
 toppings = Frame(root, background='blue')
 finalise = Frame(root, background='#cee741')
-confirm = Frame(root, background='#cee741')
 
 #images for pizza
 BaseClassic = ImageTk.PhotoImage(file="images/Base_classic.png")
@@ -32,7 +31,7 @@ root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
 
 #adding frames to a list
-frames = [entry, base, sauce, cheese, toppings, finalise, confirm]
+frames = [entry, base, sauce, cheese, toppings, finalise]
 
 #putting frames on the page
 for frame in frames:
@@ -185,7 +184,6 @@ enterName = Label(finalise, text="Enter your name:").place(x=620, y=630)
 userName = Entry(finalise, width=50)
 userName.place(x=620, y=660)
 
-
 def confirm():
   global names
   global finish
@@ -199,15 +197,19 @@ def confirm():
 
 def yes():
   global finish
+  global orderList
+  global canvas
+  finish.destroy()
   message = Toplevel(width=250, height=100, background='#cee741')
   Label(message, text="Your order will be ready to pick up in store in ten minutes", bg='#cee741').pack(padx=20, pady=10)
   Label(message, text="Thankyou for buying from Gizza Pizza", bg='#cee741').pack(padx=20)
-  #NOTE: destroy the whole programme and then everything will be reset back to the entry screen
+  orderList = []
+  canvas.delete("all")
   show_frame(entry)
 
 def no():
   final()
-  #NOTE: destroy the finish TopLevel thing so that it just goes back 
+  finish.destroy()
 
 Button(finalise, text="Proceed", command=confirm).place(x=620, y=690)
 
