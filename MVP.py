@@ -6,7 +6,6 @@
 
 from tkinter import *
 from PIL import ImageTk, Image
-import os
 
 root = Tk()
 root.title('Minimum Viable Product')
@@ -20,7 +19,9 @@ toppings = Frame(root, background='blue')
 finalise = Frame(root, background='#cee741')
 
 #images for pizza
-BaseClassic = ImageTk.PhotoImage(file="images/Base_classic.png")
+BaseClassic = ImageTk.PhotoImage(file="images/Base_wholemeal.png")
+#BaseGlutenFree = ImageTk.PhotoImage(file="images/Base_GF.png")
+#BaseThickCrust = ImageTk.PhotoImage(file="images/Base_thickCrust.png")
 SauceTomato = ImageTk.PhotoImage(file="images/Sauce_tomato.png")
 CheeseBasic = ImageTk.PhotoImage(file="images/Cheese_basic.png")
 ToppingPepperoni = ImageTk.PhotoImage(file="images/Topping_pepperoni.png")
@@ -90,6 +91,8 @@ def putOnPizza(img, int, str):
         canvas.create_image(275,275, image=item)
 
 Button(base, text="Base", command=lambda:putOnPizza(BaseClassic, 0, "Classic Base")).grid(row=1, column=4)
+#Button(base, text="Base", command=lambda:putOnPizza(BaseGlutenFree, 0, "Gluten Free Base")).grid(row=2, column=4)
+#Button(base, text="Base", command=lambda:putOnPizza(BaseThickCrust, 0, "Thick Crusted Base")).grid(row=3, column=4)
 Button(sauce, text="Sauce", command=lambda:putOnPizza(SauceTomato, 1, "Tomato Sauce")).grid(row=1, column=4)
 Button(cheese, text="Cheese", command=lambda:putOnPizza(CheeseBasic, 2, "Basic Cheese")).grid(row=1, column=4)
 Button(toppings, text="Topping", command=lambda:putOnPizza(ToppingPepperoni, 3, "Pepperoni")).grid(row=1, column=4)
@@ -214,7 +217,7 @@ def no():
 Button(finalise, text="Proceed", command=confirm).place(x=620, y=690)
 
 def goToFinal():
-  Button(stages, text="finalise order", command=final).grid(row=2, column=4)
+  Button(stages, text="finalise order", command=final).grid(row=5, column=4)
   Button(finalise, text="back to ording", command=last_screen).grid(row=0, column=0, padx=80, pady=80)
 
 #-----Main Routine-----#
