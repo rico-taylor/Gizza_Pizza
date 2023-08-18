@@ -6,6 +6,7 @@
 
 from tkinter import *
 from PIL import ImageTk, Image
+import re
 
 root = Tk()
 root.title('Minimum Viable Product')
@@ -187,16 +188,32 @@ enterName = Label(finalise, text="Enter your name:").place(x=620, y=630)
 userName = Entry(finalise, width=50)
 userName.place(x=620, y=660)
 
+
 def confirm():
   global names
   global finish
-  finish = Toplevel(width=250, height=100, background='#cee741')
-  finish.title('Confirmation')
-  names = str(userName.get()) #NOTE: fix capitalization of both words
-  Label(finish, text=names.capitalize()).grid(row=0,column=0, padx=10)
-  Label(finish, text="Would you like to confirm your order?", bg='#cee741').grid(row=1, column=0, columnspan=2, padx=10)
-  Button(finish, text="Yes", command=yes).grid(row=2, column=0, padx=2)
-  Button(finish, text="No", command=no).grid(row=2, column=1)
+  names = userName.get()
+  individualNames = names.split()
+  errorIntegers = Label(finalise, text="error: only letters allowed", background='#cee741', fg="red")
+  for x in individualNames:
+    x.capitalize()
+    if not re.match("^[A-z]*$", x): #if the name isn't a letter from a-z the computer will ask the user again for their input
+      errorIntegers.place(x=690, y=695)
+  if individualNames == []:
+    Label(finalise, text="                                                ", background='#cee741').place(x=690, y=695)
+    Label(finalise, text="error: no name", background='#cee741', fg="red").place(x=690, y=695)
+  elif re.match("^[A-z]*$", x):
+    Label(finalise, text="                                                ", background='#cee741').place(x=690, y=695)
+    name = []
+    for x in names.split():
+      name.append(x.capitalize())
+    finish = Toplevel(width=250, height=100, background='#cee741')
+    finish.title('Confirmation')
+    finish.grab_set()
+    Label(finish, text=name).grid(row=0,column=0, padx=10)
+    Label(finish, text="Would you like to confirm your order?", bg='#cee741').grid(row=1, column=0, columnspan=2, padx=10)
+    Button(finish, text="Yes", command=yes).grid(row=2, column=0, padx=2)
+    Button(finish, text="No", command=no).grid(row=2, column=1)
 
 def yes():
   global finish
