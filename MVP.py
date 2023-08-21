@@ -23,9 +23,9 @@ finalise = Frame(root, background='#cee741')
 BaseClassic = ImageTk.PhotoImage(file="images/Base_wholemeal.png")
 #BaseGlutenFree = ImageTk.PhotoImage(file="images/Base_GF.png")
 #BaseThickCrust = ImageTk.PhotoImage(file="images/Base_thickCrust.png")
-SauceTomato = ImageTk.PhotoImage(file="images/Sauce_tomato.png")
+SauceTomato = ImageTk.PhotoImage(file="images/Sauce_pesto.png")
 CheeseBasic = ImageTk.PhotoImage(file="images/Cheese_basic.png")
-ToppingPepperoni = ImageTk.PhotoImage(file="images/Topping_pepperoni.png")
+ToppingPepperoni = ImageTk.PhotoImage(file="images/Topping_mushroom.png")
 
 #making the program open the frames in the full screen.
 root.state("zoomed")
@@ -173,11 +173,13 @@ Button(entry, image=orderLabel, borderwidth=0, bd=5, command=BASE).pack(pady=0)
 def final():
   global orderList
   global finalise
+  global orderList
   show_frame(finalise)
   pizza.place(x=30,y=150)
   show_frame(pizza)
   Label(finalise, text="Your Pizza:").grid(row=1, column=1, padx=350, pady=10, sticky=W)
   nameList = []
+  Label(finalise, height=19, width=1000, bg="#cee741").place(x=618,y=232)
   for item in orderList:
     if (orderList.index(item) + 1) % 3 == 0:
       nameList.append(item)
@@ -193,16 +195,19 @@ def confirm():
   global names
   global finish
   names = userName.get()
+  userName.delete(0 ,'end')
   individualNames = names.split()
   errorIntegers = Label(finalise, text="error: only letters allowed", background='#cee741', fg="red")
+  Integer = False
   for x in individualNames:
     x.capitalize()
     if not re.match("^[A-z]*$", x): #if the name isn't a letter from a-z the computer will ask the user again for their input
+      Integer = True
       errorIntegers.place(x=690, y=695)
   if individualNames == []:
     Label(finalise, text="                                                ", background='#cee741').place(x=690, y=695)
     Label(finalise, text="error: no name", background='#cee741', fg="red").place(x=690, y=695)
-  elif re.match("^[A-z]*$", x):
+  elif Integer == False:
     Label(finalise, text="                                                ", background='#cee741').place(x=690, y=695)
     name = []
     for x in names.split():
